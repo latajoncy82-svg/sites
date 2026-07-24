@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katalog linków</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ======================================================
+     TU ZMIENIASZ KOLOR OBRAMOWANIA LINKÓW
+     Podmień poniższą wartość na dowolny kolor (np. #E63946)
+     ====================================================== */
+  :root {
+    --border-color: #2F6F6B;   /* <-- EDYTUJ TUTAJ kolor obramowania kart/linków */
+    --border-color-hover: #1F4E4B;
+
+    --bg: #EEF1EF;
+    --surface: #FFFFFF;
+    --ink: #16211E;
+    --muted: #66756F;
+    --inactive-border: #C8CFCB;
+    --inactive-text: #97A29C;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    padding: 48px 24px 80px;
+  }
+
+  header {
+    max-width: 960px;
+    margin: 0 auto 40px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--border-color);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .instrukcja {
+    max-width: 680px;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.55;
+    background: var(--surface);
+    border-left: 3px solid var(--border-color);
+    padding: 14px 18px;
+    border-radius: 4px;
+  }
+
+  .instrukcja code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+
+  #grid {
+    max-width: 960px;
+    margin: 36px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    position: relative;
+    background: var(--surface);
+    border: 2px solid var(--inactive-border);
+    border-radius: 8px;
+    padding: 16px 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .card.active {
+    border-color: var(--border-color);
+  }
+
+  .card.active:hover {
+    border-color: var(--border-color-hover);
+    transform: translateY(-2px);
+  }
+
+  .numer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .nazwa {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  .card.inactive .nazwa {
+    color: var(--ink);
+  }
+
+  .link-box {
+    margin-top: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    text-decoration: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px dashed var(--inactive-border);
+    color: var(--inactive-text);
+    cursor: default;
+  }
+
+  .card.active .link-box {
+    border: 1px solid var(--border-color);
+    color: var(--border-color);
+    cursor: pointer;
+  }
+
+  .card.active .link-box:hover {
+    background: var(--border-color);
+    color: #fff;
+  }
+
+  footer {
+    max-width: 960px;
+    margin: 40px auto 0;
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Katalog / 30 pozycji</p>
+  <h1>Lista linków</h1>
+  <div class="instrukcja">
+    Każda karta zaczyna jako <strong>nieaktywna</strong> (przerywana ramka, brak działającego linku).
+    Aby ją aktywować, znajdź w kodzie tablicę <code>links</code> (sekcja <code>&lt;script&gt;</code> na dole pliku)
+    i wpisz w danej pozycji nazwę oraz adres <code>url</code>. Kolor obramowania aktywnych kart zmienisz
+    w jednym miejscu — na górze pliku, w zmiennej <code>--border-color</code>.
+  </div>
+</header>
+
+<div id="grid"></div>
+
+<footer>30 / 30 pozycji</footer>
+
+<script>
+  // ======================================================
+  // TU EDYTUJESZ NAZWY I LINKI
+  // Zostaw url: null -> karta jest nieaktywna
+  // Wpisz url: "https://..." -> karta staje się aktywna i klikalna
+  // ======================================================
+  const links = Array.from({ length: 30 }, (_, i) => ({
+    nazwa: `Strona ${i + 1}`,
+    url: null
+  }));
+
+  const grid = document.getElementById('grid');
+
+  links.forEach((item, i) => {
+    const isActive = !!item.url;
+
+    const card = document.createElement('div');
+    card.className = 'card ' + (isActive ? 'active' : 'inactive');
+
+    const numer = document.createElement('div');
+    numer.className = 'numer';
+    numer.textContent = String(i + 1).padStart(2, '0');
+
+    const nazwa = document.createElement('div');
+    nazwa.className = 'nazwa';
+    nazwa.textContent = item.nazwa;
+
+    const linkBox = document.createElement(isActive ? 'a' : 'div');
+    linkBox.className = 'link-box';
+    if (isActive) {
+      linkBox.href = item.url;
+      linkBox.target = '_blank';
+      linkBox.rel = 'noopener noreferrer';
+      linkBox.textContent = 'Otwórz →';
+    } else {
+      linkBox.textContent = 'Link nieaktywny';
+    }
+
+    card.appendChild(numer);
+    card.appendChild(nazwa);
+    card.appendChild(linkBox);
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
