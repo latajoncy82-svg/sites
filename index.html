@@ -178,9 +178,13 @@
   // Żeby DODAĆ pozycję -> dopisz nową linię na końcu listy.
   // Żeby USUNĄĆ pozycję -> skasuj całą linię.
   // Liczba pozycji na górze i na dole strony aktualizuje się sama.
+  //
+  // Żeby pojedyncza karta miała INNY KOLOR niż reszta, dopisz "kolor":
+  //   { nazwa: "Nazwa strony", url: "https://adres.pl", kolor: "#E63946" },
+  // Karty bez pola "kolor" zostają w domyślnym kolorze z --border-color.
   // ======================================================================
   const links = [
-    { nazwa: "Test polityczny",  url:"https://testpolityczny.netlify.app", color: "#E63946" },
+    { nazwa: "Test polityczny", url: "https://testpolityczny.netlify.app", kolor: "#E63946" },
     { nazwa: "Strona 2",  url: null },
     { nazwa: "Strona 3",  url: null },
     { nazwa: "Strona 4",  url: null },
@@ -227,6 +231,10 @@
 
     const card = document.createElement('div');
     card.className = 'card ' + (isActive ? 'active' : 'inactive');
+    if (item.kolor) {
+      card.style.setProperty('--border-color', item.kolor);
+      card.style.setProperty('--border-color-hover', item.kolor);
+    }
 
     const numer = document.createElement('div');
     numer.className = 'numer';
