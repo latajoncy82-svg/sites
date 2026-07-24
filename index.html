@@ -157,26 +157,70 @@
 <body>
 
 <header>
-  <p class="eyebrow">Katalog / 30 pozycji</p>
+  <p class="eyebrow">Katalog / 32 pozycje</p>
   <h1>Lista linków</h1>
 </header>
 
 <div id="grid"></div>
 
-<footer>30 / 30 pozycji</footer>
+<footer id="licznik">32 / 32 pozycji</footer>
 
 <script>
-  // ======================================================
+  // ======================================================================
   // TU EDYTUJESZ NAZWY I LINKI
-  // Zostaw url: null -> karta jest nieaktywna
-  // Wpisz url: "https://..." -> karta staje się aktywna i klikalna
-  // ======================================================
-  const links = Array.from({ length: 30 }, (_, i) => ({
-    nazwa: `Strona ${i + 1}`,
-    url: null
-  }));
+  //
+  // Każda pozycja to jedna linia poniżej. Format:
+  //   { nazwa: "Nazwa strony", url: "https://adres-strony.pl" },
+  //
+  // Jeśli chcesz, żeby karta była NIEAKTYWNA (jeszcze bez linku), wpisz:
+  //   { nazwa: "Nazwa strony", url: null },
+  //
+  // Żeby DODAĆ pozycję -> dopisz nową linię na końcu listy.
+  // Żeby USUNĄĆ pozycję -> skasuj całą linię.
+  // Liczba pozycji na górze i na dole strony aktualizuje się sama.
+  // ======================================================================
+  const links = [
+    { nazwa: "Strona 1",  url: null },
+    { nazwa: "Strona 2",  url: null },
+    { nazwa: "Strona 3",  url: null },
+    { nazwa: "Strona 4",  url: null },
+    { nazwa: "Strona 5",  url: null },
+    { nazwa: "Strona 6",  url: null },
+    { nazwa: "Strona 7",  url: null },
+    { nazwa: "Strona 8",  url: null },
+    { nazwa: "Strona 9",  url: null },
+    { nazwa: "Strona 10", url: null },
+    { nazwa: "Strona 11", url: null },
+    { nazwa: "Strona 12", url: null },
+    { nazwa: "Strona 13", url: null },
+    { nazwa: "Strona 14", url: null },
+    { nazwa: "Strona 15", url: null },
+    { nazwa: "Strona 16", url: null },
+    { nazwa: "Strona 17", url: null },
+    { nazwa: "Strona 18", url: null },
+    { nazwa: "Strona 19", url: null },
+    { nazwa: "Strona 20", url: null },
+    { nazwa: "Strona 21", url: null },
+    { nazwa: "Strona 22", url: null },
+    { nazwa: "Strona 23", url: null },
+    { nazwa: "Strona 24", url: null },
+    { nazwa: "Strona 25", url: null },
+    { nazwa: "Strona 26", url: null },
+    { nazwa: "Strona 27", url: null },
+    { nazwa: "Strona 28", url: null },
+    { nazwa: "Strona 29", url: null },
+    { nazwa: "Strona 30", url: null },
+    { nazwa: "Strona 31", url: null },
+    { nazwa: "Strona 32", url: null },
+  ];
 
   const grid = document.getElementById('grid');
+  const eyebrow = document.querySelector('.eyebrow');
+  const licznik = document.getElementById('licznik');
+
+  const aktywne = links.filter(item => !!item.url).length;
+  eyebrow.textContent = `Katalog / ${links.length} pozycji`;
+  licznik.textContent = `${aktywne} / ${links.length} pozycji aktywnych`;
 
   links.forEach((item, i) => {
     const isActive = !!item.url;
