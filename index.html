@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Katalog linków</title>
+<meta name="theme-color" content="#0A1220">
+<title>Peak Studio — Katalog linków</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A1220'/%3E%3Cpolygon points='6,50 22,18 32,32 44,10 58,50' fill='%234E8FE0'/%3E%3Cpolygon points='32,32 44,10 58,50 44,50' fill='%2379B4FF'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
   /* ======================================================
@@ -13,15 +15,16 @@
      Podmień poniższą wartość na dowolny kolor (np. #E63946)
      ====================================================== */
   :root {
-    --border-color: #2F6F6B;   /* <-- EDYTUJ TUTAJ kolor obramowania kart/linków */
-    --border-color-hover: #1F4E4B;
+    --border-color: #4E8FE0;   /* <-- EDYTUJ TUTAJ kolor obramowania kart/linków */
+    --border-color-hover: #79B4FF;
 
-    --bg: #EEF1EF;
-    --surface: #FFFFFF;
-    --ink: #16211E;
-    --muted: #66756F;
-    --inactive-border: #C8CFCB;
-    --inactive-text: #97A29C;
+    --bg: #0A1220;
+    --bg-2: #0E1A30;
+    --surface: #121D33;
+    --ink: #E8EEF6;
+    --muted: #8CA0BC;
+    --inactive-border: #223151;
+    --inactive-text: #52678A;
   }
 
   * { box-sizing: border-box; }
@@ -31,12 +34,75 @@
     background: var(--bg);
     color: var(--ink);
     font-family: 'Inter', sans-serif;
-    padding: 48px 24px 80px;
   }
 
-  header {
+  /* ---------- HERO: 3 świecące góry + duży napis PEAK STUDIO ---------- */
+
+  .hero {
+    position: relative;
+    width: 100%;
+    height: clamp(340px, 44vw, 560px);
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .hero-scene {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-text {
+    position: absolute;
+    left: 50%;
+    bottom: 9%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .wordmark {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-size: clamp(34px, 7.2vw, 84px);
+    line-height: 1;
+    background: linear-gradient(180deg, #F2F8FF 0%, #9CCBFA 45%, #4E8FE0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 22px rgba(110, 175, 240, 0.55));
+  }
+
+  .flare-line {
+    position: relative;
+    width: min(70%, 260px);
+    height: 1px;
+    margin: 18px auto 0;
+    background: linear-gradient(90deg, transparent, rgba(121, 180, 255, 0.9), transparent);
+  }
+
+  .flare-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #E8F4FF;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 14px 4px rgba(140, 195, 255, 0.85);
+  }
+
+  /* ---------- Reszta strony ---------- */
+
+  .page {
     max-width: 960px;
-    margin: 0 auto 40px;
+    margin: 0 auto;
+    padding: 44px 24px 80px;
   }
 
   .eyebrow {
@@ -44,15 +110,17 @@
     font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--border-color);
+    color: var(--border-color-hover);
     margin: 0 0 10px;
   }
 
-  h1 {
+  h2 {
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(28px, 4vw, 40px);
+    font-size: clamp(24px, 3.4vw, 34px);
     margin: 0 0 12px;
     letter-spacing: -0.01em;
+    color: var(--ink);
+    font-weight: 600;
   }
 
   .instrukcja {
@@ -72,10 +140,10 @@
     padding: 1px 6px;
     border-radius: 3px;
     font-size: 13px;
+    color: var(--ink);
   }
 
   #grid {
-    max-width: 960px;
     margin: 36px auto 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -91,7 +159,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: border-color 0.15s ease, transform 0.15s ease;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   }
 
   .card.active {
@@ -101,6 +169,7 @@
   .card.active:hover {
     border-color: var(--border-color-hover);
     transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   }
 
   .numer {
@@ -114,10 +183,11 @@
     font-weight: 600;
     font-size: 15px;
     line-height: 1.3;
+    color: var(--ink);
   }
 
   .card.inactive .nazwa {
-    color: var(--ink);
+    color: var(--muted);
   }
 
   .link-box {
@@ -135,17 +205,16 @@
 
   .card.active .link-box {
     border: 1px solid var(--border-color);
-    color: var(--border-color);
+    color: var(--border-color-hover);
     cursor: pointer;
   }
 
   .card.active .link-box:hover {
     background: var(--border-color);
-    color: #fff;
+    color: #05070C;
   }
 
   footer {
-    max-width: 960px;
     margin: 40px auto 0;
     font-size: 12.5px;
     color: var(--muted);
@@ -156,14 +225,105 @@
 </head>
 <body>
 
-<header>
-  <p class="eyebrow">Katalog / 32 pozycje</p>
-  <h1>Lista linków</h1>
-</header>
+<section class="hero">
+  <svg class="hero-scene" viewBox="0 0 1440 480" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#040810"/>
+        <stop offset="55%" stop-color="#0A162B"/>
+        <stop offset="100%" stop-color="#0E1E38"/>
+      </linearGradient>
+      <linearGradient id="peakSide" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#9CCBF5"/>
+        <stop offset="28%" stop-color="#4E8FE0"/>
+        <stop offset="100%" stop-color="#132A4E"/>
+      </linearGradient>
+      <linearGradient id="peakMain" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F2F8FF"/>
+        <stop offset="16%" stop-color="#9CCBFA"/>
+        <stop offset="50%" stop-color="#4E8FE0"/>
+        <stop offset="100%" stop-color="#122544"/>
+      </linearGradient>
+      <radialGradient id="glowBig" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#8FD3FF" stop-opacity="0.65"/>
+        <stop offset="100%" stop-color="#8FD3FF" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="glowSmall" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#6FB0F0" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#6FB0F0" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0A1220" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#0A1220" stop-opacity="1"/>
+      </linearGradient>
+    </defs>
 
-<div id="grid"></div>
+    <rect x="0" y="0" width="1440" height="480" fill="url(#sky)"/>
 
-<footer id="licznik">32 / 32 pozycji</footer>
+    <!-- gwiazdy -->
+    <circle cx="473.4" cy="41.4" r="1.38" fill="#CFE6FF" opacity="0.29"/>
+    <circle cx="770.2" cy="79.0" r="0.67" fill="#CFE6FF" opacity="0.55"/>
+    <circle cx="72.5" cy="90.9" r="0.68" fill="#CFE6FF" opacity="0.3"/>
+    <circle cx="614.3" cy="159.7" r="0.75" fill="#CFE6FF" opacity="0.38"/>
+    <circle cx="898.4" cy="180.8" r="1.29" fill="#CFE6FF" opacity="0.49"/>
+    <circle cx="1386.8" cy="23.2" r="1.63" fill="#CFE6FF" opacity="0.42"/>
+    <circle cx="222.0" cy="35.6" r="0.97" fill="#CFE6FF" opacity="0.74"/>
+    <circle cx="273.0" cy="116.8" r="1.37" fill="#CFE6FF" opacity="0.47"/>
+    <circle cx="786.8" cy="26.0" r="0.67" fill="#CFE6FF" opacity="0.37"/>
+    <circle cx="972.6" cy="89.8" r="0.98" fill="#CFE6FF" opacity="0.6"/>
+    <circle cx="654.5" cy="67.5" r="1.55" fill="#CFE6FF" opacity="0.67"/>
+    <circle cx="361.7" cy="115.5" r="1.23" fill="#CFE6FF" opacity="0.78"/>
+    <circle cx="1041.2" cy="65.4" r="1.78" fill="#CFE6FF" opacity="0.32"/>
+    <circle cx="605.4" cy="147.5" r="0.78" fill="#CFE6FF" opacity="0.54"/>
+    <circle cx="74.9" cy="131.9" r="1.52" fill="#CFE6FF" opacity="0.59"/>
+    <circle cx="1245.7" cy="69.9" r="1.43" fill="#CFE6FF" opacity="0.61"/>
+    <circle cx="831.9" cy="94.8" r="1.61" fill="#CFE6FF" opacity="0.82"/>
+    <circle cx="683.7" cy="131.2" r="0.67" fill="#CFE6FF" opacity="0.67"/>
+    <circle cx="926.0" cy="188.8" r="1.59" fill="#CFE6FF" opacity="0.42"/>
+    <circle cx="560.1" cy="132.0" r="0.63" fill="#CFE6FF" opacity="0.53"/>
+    <circle cx="255.3" cy="35.5" r="0.67" fill="#CFE6FF" opacity="0.71"/>
+    <circle cx="201.1" cy="58.3" r="1.07" fill="#CFE6FF" opacity="0.77"/>
+
+    <!-- poświata za szczytami -->
+    <circle cx="270" cy="220" r="170" fill="url(#glowSmall)"/>
+    <circle cx="1170" cy="240" r="170" fill="url(#glowSmall)"/>
+    <circle cx="680" cy="90" r="290" fill="url(#glowBig)"/>
+
+    <!-- góra lewa -->
+    <polygon points="-20,480 120,300 200,340 270,140 340,300 420,250 580,480" fill="url(#peakSide)"/>
+    <polygon points="235,205 270,140 305,210 270,235" fill="#EAF4FF" opacity="0.4"/>
+
+    <!-- góra prawa -->
+    <polygon points="860,480 1000,280 1080,330 1170,160 1240,300 1320,260 1480,480" fill="url(#peakSide)"/>
+    <polygon points="1135,225 1170,160 1205,230 1170,255" fill="#EAF4FF" opacity="0.4"/>
+
+    <!-- góra środkowa (główna, najjaśniejsza) -->
+    <polygon points="430,480 540,270 610,330 680,40 730,130 780,110 850,270 1010,480" fill="url(#peakMain)"/>
+    <polygon points="645,105 680,40 715,110 680,140" fill="#FFFFFF" opacity="0.65"/>
+    <polygon points="762,140 780,110 800,145 780,165" fill="#FFFFFF" opacity="0.5"/>
+
+    <!-- mgła u podnóża -->
+    <rect x="0" y="360" width="1440" height="120" fill="url(#mist)"/>
+  </svg>
+
+  <div class="hero-text">
+    <h1 class="wordmark">Peak Studio</h1>
+    <div class="flare-line"><span class="flare-dot"></span></div>
+  </div>
+</section>
+
+<div class="page">
+
+  <header>
+    <p class="eyebrow">Katalog / 32 pozycje</p>
+    <h2>Lista linków</h2>
+  </header>
+
+  <div id="grid"></div>
+
+  <footer id="licznik">32 / 32 pozycji</footer>
+
+</div>
 
 <script>
   // ======================================================================
