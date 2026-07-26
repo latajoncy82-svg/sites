@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#04050A">
-<title>Vertex Studio — Katalog linków</title>
+<title>Husar Studio — Katalog linków</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2304050A'/%3E%3Cline x1='32' y1='10' x2='32' y2='22' stroke='%23FF5A36' stroke-width='2.5'/%3E%3Cline x1='32' y1='42' x2='32' y2='54' stroke='%23FF5A36' stroke-width='2.5'/%3E%3Cline x1='10' y1='32' x2='22' y2='32' stroke='%23FF5A36' stroke-width='2.5'/%3E%3Cline x1='42' y1='32' x2='54' y2='32' stroke='%23FF5A36' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23FF5A36'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -90,7 +90,6 @@
     background: radial-gradient(circle at center, #0A0E1A 0%, #04050A 100%);
   }
 
-  /* Canvas dla cząsteczek wpadających do dziury */
   #spaceCanvas {
     position: absolute;
     top: 0;
@@ -100,7 +99,6 @@
     z-index: 1;
   }
 
-  /* Kontener na CSS'ową Czarną Dziurę */
   .black-hole-container {
     position: absolute;
     top: 50%;
@@ -114,7 +112,6 @@
     z-index: 2;
   }
 
-  /* Akrecyjny Dysk (Płaski, obracający się pierścień gazu) */
   .accretion-disk {
     position: absolute;
     width: 100%;
@@ -159,7 +156,6 @@
     to { transform: rotate(360deg); }
   }
 
-  /* Horyzont Zdarzeń (Sama czarna kula) */
   .event-horizon {
     position: absolute;
     width: 28%;
@@ -172,7 +168,6 @@
       inset 0 0 50px 10px rgba(0, 0, 0, 1);
   }
 
-  /* Pierścień Fotonowy (Świetlisty ring na krawędzi dziury) */
   .photon-ring {
     position: absolute;
     width: 30%;
@@ -191,7 +186,6 @@
     50% { box-shadow: 0 0 40px 4px rgba(255, 200, 100, 0.6), 0 0 80px 8px rgba(255, 90, 54, 0.8), inset 0 0 30px 4px rgba(255, 200, 100, 0.4); }
   }
 
-  /* Światło odbite od dysku */
   .disk-glow {
     position: absolute;
     width: 60%;
@@ -207,7 +201,6 @@
     50% { transform: scale(1.2); opacity: 0.8; }
   }
 
-  /* Tekst Hero */
   .hero-text {
     position: relative;
     z-index: 10;
@@ -365,7 +358,6 @@
     gap: 24px;
   }
 
-  /* Karty 4.0 - z efektem holograficznym dla nieaktywnych */
   .card {
     position: relative;
     background: var(--surface);
@@ -628,7 +620,7 @@
 
   <div class="hero-text" id="heroText">
     <p class="eyebrow-hero" id="heroCount">Inicjalizacja węzłów...</p>
-    <h1 class="wordmark">Vertex<br>Studio</h1>
+    <h1 class="wordmark">Husar<br>Studio</h1>
   </div>
 
   <div class="scroll-indicator">
@@ -650,7 +642,7 @@
   <div id="grid"></div>
 
   <footer>
-    <div class="footer-logo">VERTEX STUDIO</div>
+    <div class="footer-logo">HUSAR STUDIO</div>
     <div class="footer-info">
       <span>&copy; 2026 Wszelkie prawa zastrzeżone</span>
       <span>•</span>
@@ -784,14 +776,12 @@
     centerX = width / 2;
     centerY = height / 2;
     
-    // Obliczanie promienia na podstawie wielkości kontenera CSS (28% z clamp)
     const containerSize = Math.max(400, Math.min(700, Math.min(width, height) * 0.7));
     blackHoleRadius = containerSize * 0.14; 
   }
   window.addEventListener('resize', resize);
   resize();
 
-  // Klasa cząsteczki
   class Particle {
     constructor() { this.reset(true); }
     
@@ -807,7 +797,6 @@
     }
 
     update() {
-      // Translacja do środka
       const tx = this.x + centerX;
       const ty = this.y + centerY;
       const dx = centerX - tx;
@@ -815,12 +804,10 @@
       const distSq = dx * dx + dy * dy;
       const dist = Math.sqrt(distSq);
 
-      // Grawitacja rośnie kwadratowo w miarę zbliżania się
       const force = 1500 / distSq;
       this.vx += (dx / dist) * force;
       this.vy += (dy / dist) * force;
 
-      // Ograniczenie prędkości
       const maxSpeed = 15;
       const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
       if (speed > maxSpeed) {
@@ -831,7 +818,6 @@
       this.x += this.vx;
       this.y += this.vy;
 
-      // Reset wpadając do środka
       if (dist < blackHoleRadius) {
         this.reset();
       }
@@ -841,7 +827,6 @@
       const tx = this.x + centerX;
       const ty = this.y + centerY;
       
-      // Rysowanie rozciągniętej smugi zamiast kropki (efekt relatywistyczny)
       ctx.beginPath();
       ctx.moveTo(tx, ty);
       ctx.lineTo(tx - this.vx * 3, ty - this.vy * 3);
@@ -860,7 +845,6 @@
   initParticles();
 
   function animateBlackHole() {
-    // Ślad po cząsteczkach (black transparent)
     ctx.fillStyle = 'rgba(4, 5, 10, 0.15)';
     ctx.fillRect(0, 0, width, height);
     
@@ -890,9 +874,7 @@
       currentX += (targetX - currentX) * 0.05;
       currentY += (targetY - currentY) * 0.05;
 
-      // Ruch dziury w przeciwną stronę
       blackHole.style.transform = `translate(calc(-50% + ${currentX * -30}px), calc(-50% + ${currentY * -20}px))`;
-      // Ruch tekstu
       heroText.style.transform = `translate(${currentX * 20}px, ${currentY * 15}px)`;
 
       requestAnimationFrame(animateParallax);
